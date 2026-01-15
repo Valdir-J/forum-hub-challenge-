@@ -1,6 +1,7 @@
 package com.example.api.forumhub.domain.topico;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -31,4 +32,17 @@ public class Topico {
         this.autor = dados.autor();
         this.curso = dados.curso();
     }
+
+    public void atualizarDados(DadosAtualizacaoTopico dados) {
+        if (dados.titulo() != null) {
+            this.titulo = dados.titulo();
+        }
+        if (dados.mensagem() != null) {
+            this.mensagem = dados.mensagem();
+        }
+        if (dados.curso() != null) {
+            this.curso = dados.curso();
+        }
+    }
+
 }
