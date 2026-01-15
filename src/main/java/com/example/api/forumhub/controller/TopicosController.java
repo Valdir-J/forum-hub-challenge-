@@ -1,6 +1,7 @@
 package com.example.api.forumhub.controller;
 
 import com.example.api.forumhub.domain.topico.*;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -54,6 +55,17 @@ public class TopicosController {
         topico.atualizarDados(dados);
 
         return ResponseEntity.ok(new DadosTopicoCompleto(topico));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity excluirTopico(@PathVariable Long id) {
+        if (!topicoRepository.existsById(id)) {
+            throw new EntityNotFoundException();
+        }
+
+        topicoRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
