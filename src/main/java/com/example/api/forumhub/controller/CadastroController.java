@@ -1,8 +1,8 @@
 package com.example.api.forumhub.controller;
 
-import com.example.api.forumhub.domain.user.CadastroDTO;
-import com.example.api.forumhub.domain.user.Usuario;
-import com.example.api.forumhub.domain.user.UsuarioRepository;
+import com.example.api.forumhub.domain.usuario.CadastroDTO;
+import com.example.api.forumhub.domain.usuario.Usuario;
+import com.example.api.forumhub.domain.usuario.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
