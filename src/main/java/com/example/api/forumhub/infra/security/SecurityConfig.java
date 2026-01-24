@@ -27,8 +27,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
-                    req.requestMatchers(HttpMethod.POST, "/login").permitAll();
-                    req.requestMatchers(HttpMethod.POST, "/cadastro").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/topicos").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/topicos/**").permitAll();
                     req.anyRequest().authenticated();
