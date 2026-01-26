@@ -1,5 +1,6 @@
-package com.example.api.forumhub.domain.usuario;
+package com.example.api.forumhub.repository;
 
+import com.example.api.forumhub.domain.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 

@@ -1,7 +1,8 @@
-package com.example.api.forumhub.domain.topico;
+package com.example.api.forumhub.domain;
 
+import com.example.api.forumhub.dto.topico.DadosAtualizacaoTopico;
+import com.example.api.forumhub.dto.topico.DadosCadastroTopico;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import lombok.*;
 
 import java.time.LocalDateTime;

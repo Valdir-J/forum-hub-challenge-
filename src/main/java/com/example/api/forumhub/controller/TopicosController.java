@@ -1,6 +1,9 @@
 package com.example.api.forumhub.controller;
 
-import com.example.api.forumhub.domain.topico.*;
+import com.example.api.forumhub.domain.Topico;
+import com.example.api.forumhub.dto.topico.*;
+import com.example.api.forumhub.repository.TopicoRepository;
+import com.example.api.forumhub.service.TopicoService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +24,7 @@ public class TopicosController {
     private TopicoRepository topicoRepository;
 
     @Autowired
-    private ValidadorDeTopicos validadorDeTopicos;
+    private TopicoService validadorDeTopicos;
 
     @PostMapping
     @Transactional

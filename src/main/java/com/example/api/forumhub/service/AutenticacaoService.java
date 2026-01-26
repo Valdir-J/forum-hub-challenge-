@@ -1,5 +1,6 @@
-package com.example.api.forumhub.domain.usuario;
+package com.example.api.forumhub.service;
 
+import com.example.api.forumhub.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

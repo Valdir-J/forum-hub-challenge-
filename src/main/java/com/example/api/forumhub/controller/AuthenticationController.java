@@ -1,9 +1,9 @@
 package com.example.api.forumhub.controller;
 
-import com.example.api.forumhub.domain.usuario.CadastroDTO;
-import com.example.api.forumhub.domain.usuario.DadosLogin;
-import com.example.api.forumhub.domain.usuario.Usuario;
-import com.example.api.forumhub.domain.usuario.UsuarioRepository;
+import com.example.api.forumhub.dto.usuario.CadastroDTO;
+import com.example.api.forumhub.dto.usuario.DadosLogin;
+import com.example.api.forumhub.domain.Usuario;
+import com.example.api.forumhub.repository.UsuarioRepository;
 import com.example.api.forumhub.infra.security.DadosTokenJWT;
 import com.example.api.forumhub.infra.security.TokenService;
 import jakarta.validation.Valid;

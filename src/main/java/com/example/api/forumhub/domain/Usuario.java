@@ -1,5 +1,6 @@
-package com.example.api.forumhub.domain.usuario;
+package com.example.api.forumhub.domain;
 
+import com.example.api.forumhub.dto.usuario.CadastroDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

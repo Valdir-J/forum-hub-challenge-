@@ -1,10 +1,12 @@
-package com.example.api.forumhub.domain.topico;
+package com.example.api.forumhub.service;
 
+import com.example.api.forumhub.dto.topico.DadosCadastroTopico;
+import com.example.api.forumhub.repository.TopicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
-public class ValidadorDeTopicos {
+@Service
+public class TopicoService {
     @Autowired
     private TopicoRepository topicoRepository;
 

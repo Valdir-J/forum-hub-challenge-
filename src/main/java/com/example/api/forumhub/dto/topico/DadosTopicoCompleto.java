@@ -1,4 +1,6 @@
-package com.example.api.forumhub.domain.topico;
+package com.example.api.forumhub.dto.topico;
+
+import com.example.api.forumhub.domain.Topico;
 
 import java.time.LocalDateTime;
 

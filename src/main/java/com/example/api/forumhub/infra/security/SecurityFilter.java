@@ -1,6 +1,6 @@
 package com.example.api.forumhub.infra.security;
 
-import com.example.api.forumhub.domain.usuario.UsuarioRepository;
+import com.example.api.forumhub.repository.UsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
