@@ -1,7 +1,9 @@
 package com.example.api.forumhub.controller;
 
-import com.example.api.forumhub.domain.Topico;
-import com.example.api.forumhub.dto.topico.*;
+import com.example.api.forumhub.dto.topico.DadosAtualizacaoTopico;
+import com.example.api.forumhub.dto.topico.DadosCadastroTopico;
+import com.example.api.forumhub.dto.topico.DadosListagemTopico;
+import com.example.api.forumhub.dto.topico.DadosTopicoCompleto;
 import com.example.api.forumhub.repository.TopicoRepository;
 import com.example.api.forumhub.service.TopicoService;
 import jakarta.persistence.EntityNotFoundException;
@@ -24,19 +26,14 @@ public class TopicosController {
     private TopicoRepository topicoRepository;
 
     @Autowired
-    private TopicoService validadorDeTopicos;
+    private TopicoService topicoService;
 
     @PostMapping
-    @Transactional
     public ResponseEntity criarTopico(@RequestBody @Valid DadosCadastroTopico dados, UriComponentsBuilder uriBuilder) {
-        validadorDeTopicos.verificarTopicoDuplicado(dados);
+        var newTopico = topicoService.criarTopico(dados);
+        var uri = uriBuilder.path("/topicos/{id}").buildAndExpand(newTopico.id()).toUri();
 
-        var topico = new Topico(dados);
-        topicoRepository.save(topico);
-
-        var uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(new DadosDetalhamentoTopico(topico));
+        return ResponseEntity.created(uri).body(newTopico);
     }
 
     @GetMapping
