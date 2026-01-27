@@ -34,8 +34,8 @@ Por se tratar de um API, será necessário você usar uma ferramenta de testes d
 **Públicas**
 
 ```
-/login
-/cadastro
+/auth/login
+/auth/register
 /topicos - somente GET
 /topicos/** - qualquer rota depois de /topicos, mas somente para o tipo GET
 ```
@@ -53,7 +53,7 @@ Todas as outras rotas são privadas. Sendo necessário realizar a autenticação
 **Cadastro de usuário**
 
 ```
-url: /cadastro
+url: /auth/register
 
 
 Entrada:
@@ -72,7 +72,7 @@ Saída:
 **Login**
 
 ```
-url: /login
+url: /auth/login
 
 Entrada:
 
