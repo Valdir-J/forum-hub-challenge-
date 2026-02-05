@@ -22,15 +22,17 @@ public class Topico {
     private String mensagem;
     private LocalDateTime dataCriacao;
     private String status;
-    private String autor;
+    @ManyToOne
+    @JoinColumn(name = "autor_id")
+    private Usuario autor;
     private String curso;
 
-    public Topico(DadosCadastroTopico dados) {
+    public Topico(DadosCadastroTopico dados, Usuario usuario) {
         this.titulo = dados.titulo();
         this.mensagem = dados.mensagem();
         this.dataCriacao = LocalDateTime.now();
         this.status = "NAO_RESPONDIDO";
-        this.autor = dados.autor();
+        this.autor = usuario;
         this.curso = dados.curso();
     }
 

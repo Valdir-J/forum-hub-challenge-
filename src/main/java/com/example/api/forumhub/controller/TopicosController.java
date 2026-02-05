@@ -1,5 +1,6 @@
 package com.example.api.forumhub.controller;
 
+import com.example.api.forumhub.domain.Usuario;
 import com.example.api.forumhub.dto.topico.DadosAtualizacaoTopico;
 import com.example.api.forumhub.dto.topico.DadosCadastroTopico;
 import com.example.api.forumhub.dto.topico.DadosListagemTopico;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -24,8 +26,9 @@ public class TopicosController {
     }
 
     @PostMapping
-    public ResponseEntity criarTopico(@RequestBody @Valid DadosCadastroTopico dados, UriComponentsBuilder uriBuilder) {
-        var newTopico = topicoService.criarTopico(dados);
+    public ResponseEntity criarTopico(@RequestBody @Valid DadosCadastroTopico dados, UriComponentsBuilder uriBuilder, Authentication authentication) {
+        var usuario = (Usuario) authentication.getPrincipal();
+        var newTopico = topicoService.criarTopico(dados, usuario);
         var uri = uriBuilder.path("/topicos/{id}").buildAndExpand(newTopico.id()).toUri();
 
         return ResponseEntity.created(uri).body(newTopico);

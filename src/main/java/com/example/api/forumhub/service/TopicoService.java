@@ -1,6 +1,7 @@
 package com.example.api.forumhub.service;
 
 import com.example.api.forumhub.domain.Topico;
+import com.example.api.forumhub.domain.Usuario;
 import com.example.api.forumhub.dto.topico.*;
 import com.example.api.forumhub.repository.TopicoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,10 +20,10 @@ public class TopicoService {
     }
 
     @Transactional
-    public DadosDetalhamentoTopico criarTopico(DadosCadastroTopico dados) {
+    public DadosDetalhamentoTopico criarTopico(DadosCadastroTopico dados, Usuario usuario) {
         verificarTopicoDuplicado(dados);
 
-        var topico = new Topico(dados);
+        var topico = new Topico(dados, usuario);
         topicoRepository.save(topico);
         return new DadosDetalhamentoTopico(topico);
     }
