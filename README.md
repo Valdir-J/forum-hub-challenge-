@@ -101,7 +101,6 @@ json:
 {
     "titulo": " ", // obrigatória
     "mensagem": " ", // obrigatória
-    "autor": " ", // obrigatória
     "curso": " " // obrigatória
 }
 
