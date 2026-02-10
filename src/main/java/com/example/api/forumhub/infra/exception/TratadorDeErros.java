@@ -13,8 +13,12 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 public class TratadorDeErros {
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity tratarErro404() {
-        var erro = new DadosErro("Not Found", "Recurso não encontrado");
+    public ResponseEntity tratarErro404(EntityNotFoundException ex) {
+        var mensagem = ex.getMessage() != null && !ex.getMessage().isEmpty() 
+                ? ex.getMessage() 
+                : "Recurso não encontrado";
+        
+        var erro = new DadosErro("Not Found", mensagem);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
     }
 
