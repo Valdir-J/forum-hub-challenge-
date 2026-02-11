@@ -39,6 +39,18 @@ public class TratadorDeErros {
         return ResponseEntity.badRequest().body(erros);
     }
 
+    @ExceptionHandler(ValidacaoException.class)
+    public ResponseEntity tratarErroRegraDeNegocio(ValidacaoException ex) {
+        var erro = new DadosErro("Bad Request", ex.getMessage());
+        return ResponseEntity.badRequest().body(erro);
+    }
+
+    @ExceptionHandler(SemPermissaoException.class)
+    public ResponseEntity tratarErroSemPermissao(SemPermissaoException ex) {
+        var erro = new DadosErro("Forbidden", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(erro);
+    }
+
     private record DadosErro(String error, String message) {}
 
     private record DadosErroValidacao(String field, String message) {

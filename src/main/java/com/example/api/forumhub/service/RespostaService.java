@@ -2,9 +2,12 @@ package com.example.api.forumhub.service;
 
 import com.example.api.forumhub.domain.Resposta;
 import com.example.api.forumhub.domain.Usuario;
+import com.example.api.forumhub.dto.resposta.DadosAtualizacaoResposta;
 import com.example.api.forumhub.dto.resposta.DadosCadastroResposta;
 import com.example.api.forumhub.dto.resposta.DadosDetalhesResposta;
 import com.example.api.forumhub.dto.resposta.DadosListagemResposta;
+import com.example.api.forumhub.infra.exception.SemPermissaoException;
+import com.example.api.forumhub.infra.exception.ValidacaoException;
 import com.example.api.forumhub.repository.RespostaRepository;
 import com.example.api.forumhub.repository.TopicoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -40,5 +43,23 @@ public class RespostaService {
         }
 
         return respostaRepository.findAllByTopicoId(idTopico, paginacao).map(DadosListagemResposta::new);
+    }
+
+    @Transactional
+    public DadosDetalhesResposta atualizarResposta(Long idTopico, Long idResposta, DadosAtualizacaoResposta dados, Usuario usuario) {
+        var resposta = respostaRepository.findById(idResposta)
+                .orElseThrow(() -> new EntityNotFoundException("Resposta não encontrada"));
+
+        if (!resposta.getTopico().getId().equals(idTopico)) {
+            throw new ValidacaoException("Esta resposta não pertence ao tópico informado");
+        }
+
+        if (!resposta.getAutor().getId().equals(usuario.getId())) {
+            throw new SemPermissaoException("Você não tem permissão para editar esta resposta");
+        }
+
+        resposta.atualizarResposta(dados);
+
+        return new DadosDetalhesResposta(resposta);
     }
 }

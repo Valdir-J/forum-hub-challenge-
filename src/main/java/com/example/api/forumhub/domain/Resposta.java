@@ -1,5 +1,6 @@
 package com.example.api.forumhub.domain;
 
+import com.example.api.forumhub.dto.resposta.DadosAtualizacaoResposta;
 import com.example.api.forumhub.dto.resposta.DadosCadastroResposta;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,6 +37,10 @@ public class Resposta {
         this.topico = topico;
         this.dataCriacao = LocalDateTime.now();
         this.autor = autor;
+    }
+
+    public void atualizarResposta(DadosAtualizacaoResposta dados) {
+        this.mensagem = dados.mensagem();
     }
 
 }

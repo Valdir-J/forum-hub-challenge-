@@ -1,6 +1,7 @@
 package com.example.api.forumhub.controller;
 
 import com.example.api.forumhub.domain.Usuario;
+import com.example.api.forumhub.dto.resposta.DadosAtualizacaoResposta;
 import com.example.api.forumhub.dto.resposta.DadosCadastroResposta;
 import com.example.api.forumhub.dto.resposta.DadosListagemResposta;
 import com.example.api.forumhub.service.RespostaService;
@@ -39,6 +40,14 @@ public class RespostaController {
     public ResponseEntity<Page<DadosListagemResposta>> listarRespostas(@PageableDefault(size = 30, sort = {"dataCriacao"}, direction = Sort.Direction.DESC) Pageable paginacao, @PathVariable Long id) {
         var page = respostaService.buscarRespostas(paginacao, id);
         return ResponseEntity.ok(page);
+    }
+
+    @PutMapping("/{idResposta}")
+    public ResponseEntity atualizarResposta(@PathVariable Long id, @PathVariable Long idResposta, @RequestBody @Valid DadosAtualizacaoResposta dados, Authentication authentication) {
+        var usuario = (Usuario) authentication.getPrincipal();
+        var respostaAtualizada = respostaService.atualizarResposta(id, idResposta, dados, usuario);
+
+        return ResponseEntity.ok(respostaAtualizada);
     }
 
 }
