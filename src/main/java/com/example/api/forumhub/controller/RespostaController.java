@@ -50,4 +50,11 @@ public class RespostaController {
         return ResponseEntity.ok(respostaAtualizada);
     }
 
+    @DeleteMapping("/{idResposta}")
+    public ResponseEntity deletarResposta(@PathVariable Long id, @PathVariable Long idResposta, Authentication authentication) {
+        var usuario = (Usuario) authentication.getPrincipal();
+        respostaService.deletarResposta(id, idResposta, usuario);
+        return ResponseEntity.noContent().build();
+    }
+
 }

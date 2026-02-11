@@ -24,7 +24,7 @@ public class TratadorDeErros {
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity tratarErro400(MethodArgumentTypeMismatchException ex) {
-        if (ex.getParameter().getParameterName().equals("id")) {
+        if (ex.getParameter().getParameterName().equals("id") || ex.getParameter().getParameterName().equals("idResposta")) {
             var erro = new DadosErro("Bad Request", "Id inválido");
             return ResponseEntity.badRequest().body(erro);
         }

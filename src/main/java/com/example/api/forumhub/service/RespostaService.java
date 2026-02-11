@@ -47,6 +47,18 @@ public class RespostaService {
 
     @Transactional
     public DadosDetalhesResposta atualizarResposta(Long idTopico, Long idResposta, DadosAtualizacaoResposta dados, Usuario usuario) {
+        var resposta = validarEBuscarResposta(idTopico, idResposta, usuario, "editar");
+        resposta.atualizarResposta(dados);
+        return new DadosDetalhesResposta(resposta);
+    }
+
+    @Transactional
+    public void deletarResposta(Long idTopico, Long idResposta, Usuario usuario) {
+        var resposta = validarEBuscarResposta(idTopico, idResposta, usuario, "excluir");
+        respostaRepository.delete(resposta);
+    }
+
+    private Resposta validarEBuscarResposta(Long idTopico, Long idResposta, Usuario usuario, String acao) {
         var resposta = respostaRepository.findById(idResposta)
                 .orElseThrow(() -> new EntityNotFoundException("Resposta não encontrada"));
 
@@ -55,11 +67,9 @@ public class RespostaService {
         }
 
         if (!resposta.getAutor().getId().equals(usuario.getId())) {
-            throw new SemPermissaoException("Você não tem permissão para editar esta resposta");
+            throw new SemPermissaoException("Você não tem permissão para " + acao + " esta resposta");
         }
 
-        resposta.atualizarResposta(dados);
-
-        return new DadosDetalhesResposta(resposta);
+        return resposta;
     }
 }
