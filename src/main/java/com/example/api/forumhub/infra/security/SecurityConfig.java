@@ -30,6 +30,7 @@ public class SecurityConfig {
                     req.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/topicos").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/topicos/**").permitAll();
+                    req.requestMatchers(HttpMethod.GET, "/usuarios/**").permitAll();
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
