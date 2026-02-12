@@ -166,3 +166,78 @@ Saída:
     "curso": " "
 }
 ```
+
+**Respostas**
+
+Os tópicos podem conter respostas
+
+**Criando uma resposta**
+
+```
+url: /topicos/{id}/respostas - POST
+
+Entrada: 
+json
+
+{
+    "mensagem": " " / obrigatória
+}
+
+Saída: 
+json
+
+{
+    "id": ,
+    "mensagem": " ",
+    "dataCriacao": " ",
+    "idTopico": ,
+    "autor": " "
+}
+
+```
+
+**Listando as respostas de um tópico**
+
+```
+url: /topicos/{id}/respostas - GET
+{id} - id do tópico
+
+Retorno: 
+Um json contendo todas os dados da paginação retornado.
+```
+
+
+**Atualizar/Editar uma resposta**
+
+```
+url: /topicos/{id}/respostas/{idRespota} - PUT
+{id} - id do tópico
+{idResposta} - id da resposta
+
+Entrada:
+json:
+
+{
+    "mensagem": " " / obrigatória
+}
+
+Saída:
+json
+
+{
+    "id": ,
+    "mensagem": " ",
+    "dataCriacao": " ",
+    "idTopico": ,
+    "autor": " "
+}
+```
+
+
+**Excluir uma resposta**
+
+```
+url: /topicos/{id}/respostas/{idRespota} - DELETE
+{id} - id do tópico
+{idResposta} - id da resposta
+```
