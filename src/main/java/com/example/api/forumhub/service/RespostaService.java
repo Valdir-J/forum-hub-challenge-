@@ -29,7 +29,7 @@ public class RespostaService {
 
     @Transactional
     public DadosDetalhesResposta criarResposta(DadosCadastroResposta dados, Usuario usuario, Long idTopico) {
-        var topico = topicoRepository.findById(idTopico)
+        var topico = topicoRepository.findByIdAndAutorAtivoTrue(idTopico)
                 .orElseThrow(() -> new EntityNotFoundException("Tópico não encontrado"));
         var resposta = new Resposta(dados, usuario, topico);
         respostaRepository.save(resposta);
@@ -38,7 +38,7 @@ public class RespostaService {
 
     @Transactional(readOnly = true)
     public Page<DadosListagemResposta> buscarRespostas(Pageable paginacao, Long idTopico) {
-        if (!topicoRepository.existsById(idTopico)) {
+        if (!topicoRepository.existsByIdAndAutorAtivoTrue(idTopico)) {
             throw new EntityNotFoundException("Tópico não encontrado");
         }
 
