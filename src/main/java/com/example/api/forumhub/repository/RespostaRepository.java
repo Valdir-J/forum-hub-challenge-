@@ -6,5 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RespostaRepository extends JpaRepository<Resposta, Long> {
-    Page<Resposta> findAllByTopicoId(Long topicoId, Pageable paginacao);
+
+    Page<Resposta> findAllByTopicoIdAndAutorAtivoTrue(Long topicoId, Pageable paginacao);
+
 }

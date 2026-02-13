@@ -42,7 +42,7 @@ public class RespostaService {
             throw new EntityNotFoundException("Tópico não encontrado");
         }
 
-        return respostaRepository.findAllByTopicoId(idTopico, paginacao).map(DadosListagemResposta::new);
+        return respostaRepository.findAllByTopicoIdAndAutorAtivoTrue(idTopico, paginacao).map(DadosListagemResposta::new);
     }
 
     @Transactional

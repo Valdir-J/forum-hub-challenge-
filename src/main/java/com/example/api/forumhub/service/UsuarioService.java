@@ -19,7 +19,7 @@ public class UsuarioService {
     }
 
     public DadosDetalhamentoUsuario pegarUsuario(Long id) {
-        var usuario = usuarioRepository.findById(id)
+        var usuario = usuarioRepository.findByIdAndAtivoTrue(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
 
         return new DadosDetalhamentoUsuario(usuario);
@@ -27,7 +27,7 @@ public class UsuarioService {
 
     @Transactional
     public DadosDetalhamentoUsuario atualizarUsuario(DadosAtualizacaoUsuario dados, Usuario user) {
-        var usuario = usuarioRepository.findById(user.getId())
+        var usuario = usuarioRepository.findByIdAndAtivoTrue(user.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
 
         if (usuarioRepository.existsByNomeAndIdNot(dados.nome(), user.getId())) {
@@ -36,5 +36,13 @@ public class UsuarioService {
 
         usuario.atualizarNome(dados.nome());
         return new DadosDetalhamentoUsuario(usuario);
+    }
+
+    @Transactional
+    public void excluirUsuario(Usuario user) {
+        var usuario = usuarioRepository.findByIdAndAtivoTrue(user.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+        
+        usuario.excluir();
     }
 }

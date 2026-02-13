@@ -27,11 +27,13 @@ public class Usuario implements UserDetails {
     private String nome;
     private String email;
     private String senha;
+    private Boolean ativo;
 
     public Usuario(CadastroDTO dados, String encryptedPassword) {
         this.nome = dados.nome();
         this.email = dados.email();
         this.senha = encryptedPassword;
+        this.ativo = true;
     }
 
     @Override
@@ -66,10 +68,14 @@ public class Usuario implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return ativo;
     }
 
     public void atualizarNome(String nome) {
         this.nome = nome;
+    }
+
+    public void excluir() {
+        this.ativo = false;
     }
 }

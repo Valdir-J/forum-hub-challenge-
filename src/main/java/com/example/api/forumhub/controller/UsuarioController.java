@@ -31,4 +31,11 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
+    @DeleteMapping()
+    public ResponseEntity excluirUsuario(Authentication authentication) {
+        var user = (Usuario) authentication.getPrincipal();
+        usuarioService.excluirUsuario(user);
+        return ResponseEntity.noContent().build();
+    }
+
 }

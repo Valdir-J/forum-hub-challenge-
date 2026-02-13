@@ -30,12 +30,13 @@ public class TopicoService {
 
     @Transactional(readOnly = true)
     public Page<DadosListagemTopico> buscarTopicos(Pageable paginacao) {
-        return topicoRepository.findAll(paginacao).map(DadosListagemTopico::new);
+        return topicoRepository.findAllByAutorAtivoTrue(paginacao).map(DadosListagemTopico::new);
     }
 
     @Transactional(readOnly = true)
     public DadosTopicoCompleto buscarTopicoPorId(Long id) {
-         var topico = topicoRepository.getReferenceById(id);
+         var topico = topicoRepository.findByIdAndAutorAtivoTrue(id)
+                 .orElseThrow(() -> new EntityNotFoundException("Tópico não encontrado ou autor inativo"));
          return new DadosTopicoCompleto(topico);
     }
 
