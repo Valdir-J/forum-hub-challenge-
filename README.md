@@ -38,6 +38,7 @@ Por se tratar de um API, será necessário você usar uma ferramenta de testes d
 /auth/register
 /topicos - somente GET
 /topicos/** - qualquer rota depois de /topicos, mas somente para o tipo GET
+/usuarios/**" - TIPO GET
 ```
 
 **Privadas**
@@ -49,6 +50,8 @@ Todas as outras rotas são privadas. Sendo necessário realizar a autenticação
 ```
 
 ### Testando a api
+
+**Autenticação**
 
 **Cadastro de usuário**
 
@@ -241,3 +244,52 @@ url: /topicos/{id}/respostas/{idRespota} - DELETE
 {id} - id do tópico
 {idResposta} - id da resposta
 ```
+
+**Usuário**
+
+**Informações do usuário**
+
+```
+url: /usuarios/{id} - GET
+
+Saída: 
+json
+
+{
+    "id": ,
+    "nome": " "
+}
+
+```
+
+**Atualizar o nome do usuário**
+
+```
+url: /usuarios - PUT
+
+Entrada:
+json
+
+{
+    "nome": " "
+}
+
+Saída:
+json
+
+{
+    "id": ,
+    "nome": " "
+}
+```
+
+**Excluir um usuário**
+
+```
+url: /usuarios - DELETE
+
+Saída:
+Sem conteúdo
+```
+
+A **exclusão** e a **atualização** do usuário não é preciso passar o id do usuário, verificamos quem é o usuário através do token JWT enviado nas requisições.
