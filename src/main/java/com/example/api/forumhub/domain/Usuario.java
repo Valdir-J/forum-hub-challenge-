@@ -11,7 +11,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Table(name = "usuarios")
 @Entity(name = "Usuario")
@@ -29,16 +30,27 @@ public class Usuario implements UserDetails {
     private String senha;
     private Boolean ativo;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "usuarios_perfis",
+            joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "perfil_id")
+    )
+    private Set<Perfil> perfis = new HashSet<>();
+
     public Usuario(CadastroDTO dados, String encryptedPassword) {
         this.nome = dados.nome();
         this.email = dados.email();
         this.senha = encryptedPassword;
         this.ativo = true;
+        this.perfis = new HashSet<>();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return perfis.stream()
+                .map(perfil -> new SimpleGrantedAuthority(perfil.getNome()))
+                .toList();
     }
 
     @Override

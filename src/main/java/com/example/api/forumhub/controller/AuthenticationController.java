@@ -1,11 +1,12 @@
 package com.example.api.forumhub.controller;
 
+import com.example.api.forumhub.domain.Usuario;
 import com.example.api.forumhub.dto.usuario.CadastroDTO;
 import com.example.api.forumhub.dto.usuario.DadosLogin;
-import com.example.api.forumhub.domain.Usuario;
-import com.example.api.forumhub.repository.UsuarioRepository;
 import com.example.api.forumhub.infra.security.DadosTokenJWT;
 import com.example.api.forumhub.infra.security.TokenService;
+import com.example.api.forumhub.repository.PerfilRepository;
+import com.example.api.forumhub.repository.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,8 @@ public class AuthenticationController {
     private UsuarioRepository usuarioRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PerfilRepository perfilRepository;
 
     @PostMapping("/login")
     public ResponseEntity efetuarLogin(@RequestBody @Valid DadosLogin dados) {
@@ -44,7 +47,9 @@ public class AuthenticationController {
     public ResponseEntity cadastrar(@RequestBody @Valid CadastroDTO dados) {
         var encryptedPassword = passwordEncoder.encode(dados.senha());
         var novoUsuario = new Usuario(dados, encryptedPassword);
+        var perfilUser = perfilRepository.findByNome("ROLE_USER");
 
+        novoUsuario.getPerfis().add(perfilUser);
         usuarioRepository.save(novoUsuario);
 
         return ResponseEntity.ok().build();
