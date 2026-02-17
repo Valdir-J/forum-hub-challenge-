@@ -1,0 +1,4 @@
+INSERT
+IGNORE INTO perfis (nome) VALUES ('ROLE_USER');
+INSERT
+IGNORE INTO perfis (nome) VALUES ('ROLE_ADMIN');
