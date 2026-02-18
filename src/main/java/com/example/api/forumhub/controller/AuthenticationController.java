@@ -5,33 +5,30 @@ import com.example.api.forumhub.dto.usuario.CadastroDTO;
 import com.example.api.forumhub.dto.usuario.DadosLogin;
 import com.example.api.forumhub.infra.security.DadosTokenJWT;
 import com.example.api.forumhub.infra.security.TokenService;
-import com.example.api.forumhub.repository.PerfilRepository;
-import com.example.api.forumhub.repository.UsuarioRepository;
+import com.example.api.forumhub.service.UsuarioService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationManager manager;
-    @Autowired
-    private TokenService tokenService;
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private PerfilRepository perfilRepository;
+    private final AuthenticationManager manager;
+    private final TokenService tokenService;
+    private final UsuarioService usuarioService;
+
+    public AuthenticationController(AuthenticationManager manager, TokenService tokenService, UsuarioService usuarioService) {
+        this.manager = manager;
+        this.tokenService = tokenService;
+        this.usuarioService = usuarioService;
+    }
 
     @PostMapping("/login")
     public ResponseEntity efetuarLogin(@RequestBody @Valid DadosLogin dados) {
@@ -44,14 +41,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity cadastrar(@RequestBody @Valid CadastroDTO dados) {
-        var encryptedPassword = passwordEncoder.encode(dados.senha());
-        var novoUsuario = new Usuario(dados, encryptedPassword);
-        var perfilUser = perfilRepository.findByNome("ROLE_USER");
+    public ResponseEntity cadastrar(@RequestBody @Valid CadastroDTO dados, UriComponentsBuilder uriBuilder) {
+        var usuario = usuarioService.cadastrarUsuario(dados);
+        var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.id()).toUri();
 
-        novoUsuario.getPerfis().add(perfilUser);
-        usuarioRepository.save(novoUsuario);
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.created(uri).body(usuario);
     }
 }
