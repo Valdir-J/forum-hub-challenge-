@@ -29,6 +29,10 @@ public class UsuarioService {
 
     @Transactional
     public DadosDetalhamentoUsuario cadastrarUsuario(CadastroDTO dados) {
+        if (usuarioRepository.findByEmail(dados.email()) != null) {
+            throw new ValidacaoException("Email já cadastrado");
+        }
+
         var encryptedPassword = passwordEncoder.encode(dados.senha());
         var novoUsuario = new Usuario(dados, encryptedPassword);
         var perfilUser = perfilRepository.findByNome("ROLE_USER");
