@@ -47,6 +47,7 @@ Todas as outras rotas são privadas. Sendo necessário realizar a autenticação
 
 ```
 /topicos - PUT, DELETE e POST
+/usuarios - PUT, DELETE
 ```
 
 ### Testando a api
@@ -68,8 +69,15 @@ json:
 }
 
 Saída:
+json: 
+{
+    "id": ,
+    "nome": " ",
+}
 
-// Sem retorno, por enquanto.
+HEADERS
+Location : /usuarios/{id} - id do novo usuário 
+
 ```
 
 **Login**
