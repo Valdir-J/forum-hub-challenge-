@@ -35,7 +35,12 @@ public class UsuarioService {
 
         var encryptedPassword = passwordEncoder.encode(dados.senha());
         var novoUsuario = new Usuario(dados, encryptedPassword);
+
         var perfilUser = perfilRepository.findByNome("ROLE_USER");
+        if (perfilUser == null) {
+            throw new IllegalStateException("Perfil ROLE_USER não encontrado. Verifique as migrations.");
+        }
+
         novoUsuario.getPerfis().add(perfilUser);
         usuarioRepository.save(novoUsuario);
 
