@@ -29,7 +29,10 @@ public class UsuarioService {
 
     @Transactional
     public DadosDetalhamentoUsuario cadastrarUsuario(CadastroDTO dados) {
-        if (usuarioRepository.findByEmail(dados.email()) != null) {
+        if (usuarioRepository.existsByNome(dados.nome())) {
+            throw new ValidacaoException("Este nome já está em uso");
+        }
+        if (usuarioRepository.existsByEmail(dados.email())) {
             throw new ValidacaoException("Email já cadastrado");
         }
 
