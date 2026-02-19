@@ -8,5 +8,5 @@ public record DadosAtualizacaoTopico(
         @NotBlank
         String mensagem,
         @NotBlank
-        String curso) {
+        String tema) {
 }

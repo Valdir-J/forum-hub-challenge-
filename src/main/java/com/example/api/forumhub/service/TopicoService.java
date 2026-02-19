@@ -1,8 +1,10 @@
 package com.example.api.forumhub.service;
 
+import com.example.api.forumhub.domain.Tema;
 import com.example.api.forumhub.domain.Topico;
 import com.example.api.forumhub.domain.Usuario;
 import com.example.api.forumhub.dto.topico.*;
+import com.example.api.forumhub.repository.TemaRepository;
 import com.example.api.forumhub.repository.TopicoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
@@ -14,16 +16,27 @@ import org.springframework.transaction.annotation.Transactional;
 public class TopicoService {
 
     private final TopicoRepository topicoRepository;
+    private final TemaRepository temaRepository;
 
-    public TopicoService(TopicoRepository topicoRepository) {
+    public TopicoService(TopicoRepository topicoRepository, TemaRepository temaRepository) {
         this.topicoRepository = topicoRepository;
+        this.temaRepository = temaRepository;
     }
 
     @Transactional
     public DadosDetalhamentoTopico criarTopico(DadosCadastroTopico dados, Usuario usuario) {
         verificarTopicoDuplicado(dados);
 
-        var topico = new Topico(dados, usuario);
+        var nomeExibicao = dados.tema();
+        var nomeNormalizado = nomeExibicao
+                .trim()
+                .replaceAll("\\s+", " ")
+                .toLowerCase();
+
+        Tema tema = temaRepository.findByNomeNormalizado(nomeNormalizado)
+                .orElseGet(() -> temaRepository.save(new Tema(nomeExibicao, nomeNormalizado)));
+
+        var topico = new Topico(dados, usuario, tema);
         topicoRepository.save(topico);
         return new DadosDetalhamentoTopico(topico);
     }

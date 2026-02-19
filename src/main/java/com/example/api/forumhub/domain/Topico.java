@@ -25,15 +25,18 @@ public class Topico {
     @ManyToOne
     @JoinColumn(name = "autor_id")
     private Usuario autor;
-    private String curso;
 
-    public Topico(DadosCadastroTopico dados, Usuario usuario) {
+    @ManyToOne
+    @JoinColumn(name = "tema_id")
+    private Tema tema;
+
+    public Topico(DadosCadastroTopico dados, Usuario usuario, Tema tema) {
         this.titulo = dados.titulo();
         this.mensagem = dados.mensagem();
         this.dataCriacao = LocalDateTime.now();
         this.status = "NAO_RESPONDIDO";
         this.autor = usuario;
-        this.curso = dados.curso();
+        this.tema = tema;
     }
 
     public void atualizarDados(DadosAtualizacaoTopico dados) {
@@ -42,9 +45,6 @@ public class Topico {
         }
         if (dados.mensagem() != null) {
             this.mensagem = dados.mensagem();
-        }
-        if (dados.curso() != null) {
-            this.curso = dados.curso();
         }
     }
 

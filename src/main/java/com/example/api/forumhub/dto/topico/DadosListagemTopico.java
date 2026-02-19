@@ -11,7 +11,7 @@ public record DadosListagemTopico(
         LocalDateTime dataCriacao,
         String status,
         String autor,
-        String curso) {
+        String tema) {
 
     public DadosListagemTopico(Topico topico) {
         this(
@@ -21,7 +21,7 @@ public record DadosListagemTopico(
                 topico.getDataCriacao(),
                 topico.getStatus(),
                 topico.getAutor().getNome(),
-                topico.getCurso());
+                topico.getTema().getNomeExibicao());
     }
 
 }
