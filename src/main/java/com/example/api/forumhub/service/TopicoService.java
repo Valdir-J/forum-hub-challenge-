@@ -4,6 +4,7 @@ import com.example.api.forumhub.domain.Tema;
 import com.example.api.forumhub.domain.Topico;
 import com.example.api.forumhub.domain.Usuario;
 import com.example.api.forumhub.dto.topico.*;
+import com.example.api.forumhub.infra.exception.ValidacaoException;
 import com.example.api.forumhub.repository.TemaRepository;
 import com.example.api.forumhub.repository.TopicoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -72,7 +73,7 @@ public class TopicoService {
 
     private void verificarTopicoDuplicado(DadosCadastroTopico dados) {
         if (topicoRepository.existsByTituloAndMensagem(dados.titulo(), dados.mensagem())) {
-            throw new RuntimeException("Existe um tópico com o mesmo título e mensagem");
+            throw new ValidacaoException("Existe um tópico com o mesmo título e mensagem");
         }
     }
 
