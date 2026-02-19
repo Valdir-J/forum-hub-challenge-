@@ -1,0 +1,3 @@
+ALTER TABLE topicos
+DROP
+COLUMN curso;
