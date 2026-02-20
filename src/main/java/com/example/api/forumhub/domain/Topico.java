@@ -21,7 +21,7 @@ public class Topico {
     private String titulo;
     private String mensagem;
     private LocalDateTime dataCriacao;
-    private String status;
+
     @ManyToOne
     @JoinColumn(name = "autor_id")
     private Usuario autor;
@@ -34,7 +34,6 @@ public class Topico {
         this.titulo = dados.titulo();
         this.mensagem = dados.mensagem();
         this.dataCriacao = LocalDateTime.now();
-        this.status = "NAO_RESPONDIDO";
         this.autor = usuario;
         this.tema = tema;
     }

@@ -9,7 +9,6 @@ public record DadosListagemTopico(
         String titulo,
         String mensagem,
         LocalDateTime dataCriacao,
-        String status,
         String autor,
         String tema) {
 
@@ -19,7 +18,6 @@ public record DadosListagemTopico(
                 topico.getTitulo(),
                 topico.getMensagem(),
                 topico.getDataCriacao(),
-                topico.getStatus(),
                 topico.getAutor().getNome(),
                 topico.getTema().getNomeExibicao());
     }
